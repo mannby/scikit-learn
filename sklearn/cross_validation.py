@@ -36,7 +36,7 @@ from .gaussian_process.kernels import Kernel as GPKernel
 from .exceptions import FitFailedWarning
 
 
-warnings.warn("This module has been deprecated in favor of the "
+warnings.warn("This module was deprecated in version 0.18 in favor of the "
               "model_selection module into which all the refactored classes "
               "and functions are moved. Also note that the interface of the "
               "new CV iterators are different from that of this module. "
@@ -1226,7 +1226,7 @@ def cross_val_predict(estimator, X, y=None, cv=None, n_jobs=1,
         - An iterable yielding train/test splits.
 
         For integer/None inputs, if the estimator is a classifier and ``y`` is
-        either binary or multiclass, :class:`StratifiedKFold` used. In all
+        either binary or multiclass, :class:`StratifiedKFold` is used. In all
         other cases, :class:`KFold` is used.
 
         Refer :ref:`User Guide <cross_validation>` for the various
@@ -1411,7 +1411,7 @@ def cross_val_score(estimator, X, y=None, scoring=None, cv=None, n_jobs=1,
         - An iterable yielding train/test splits.
 
         For integer/None inputs, if the estimator is a classifier and ``y`` is
-        either binary or multiclass, :class:`StratifiedKFold` used. In all
+        either binary or multiclass, :class:`StratifiedKFold` is used. In all
         other cases, :class:`KFold` is used.
 
         Refer :ref:`User Guide <cross_validation>` for the various
@@ -1548,7 +1548,7 @@ def _fit_and_score(estimator, X, y, scorer, train, test, verbose,
     """
     if verbose > 1:
         if parameters is None:
-            msg = "no parameters to be set"
+            msg = ''
         else:
             msg = '%s' % (', '.join('%s=%s' % (k, v)
                           for k, v in parameters.items()))
@@ -1648,6 +1648,13 @@ def _score(estimator, X_test, y_test, scorer):
         score = scorer(estimator, X_test)
     else:
         score = scorer(estimator, X_test, y_test)
+    if hasattr(score, 'item'):
+        try:
+            # e.g. unwrap memmapped scalars
+            score = score.item()
+        except ValueError:
+            # non-scalar?
+            pass
     if not isinstance(score, numbers.Number):
         raise ValueError("scoring must return a number, got %s (%s) instead."
                          % (str(score), type(score)))
@@ -1690,7 +1697,7 @@ def check_cv(cv, X=None, y=None, classifier=False):
         - An iterable yielding train/test splits.
 
         For integer/None inputs, if classifier is True and ``y`` is binary or
-        multiclass, :class:`StratifiedKFold` used. In all other cases,
+        multiclass, :class:`StratifiedKFold` is used. In all other cases,
         :class:`KFold` is used.
 
         Refer :ref:`User Guide <cross_validation>` for the various
@@ -1764,7 +1771,7 @@ def permutation_test_score(estimator, X, y, cv=None,
         - An iterable yielding train/test splits.
 
         For integer/None inputs, if the estimator is a classifier and ``y`` is
-        either binary or multiclass, :class:`StratifiedKFold` used. In all
+        either binary or multiclass, :class:`StratifiedKFold` is used. In all
         other cases, :class:`KFold` is used.
 
         Refer :ref:`User Guide <cross_validation>` for the various
@@ -1846,13 +1853,8 @@ def train_test_split(*arrays, **options):
     Parameters
     ----------
     *arrays : sequence of indexables with same length / shape[0]
-
-        allowed inputs are lists, numpy arrays, scipy-sparse
+        Allowed inputs are lists, numpy arrays, scipy-sparse
         matrices or pandas dataframes.
-
-        .. versionadded:: 0.16
-            preserves input type instead of always casting to numpy array.
-
 
     test_size : float, int, or None (default is None)
         If float, should be between 0.0 and 1.0 and represent the
@@ -1883,7 +1885,9 @@ def train_test_split(*arrays, **options):
         List containing train-test split of inputs.
 
         .. versionadded:: 0.16
-            Output type is the same as the input type.
+            If the input is sparse, the output will be a
+            ``scipy.sparse.csr_matrix``. Else, output type is the same as the
+            input type.
 
     Examples
     --------

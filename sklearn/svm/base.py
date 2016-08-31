@@ -233,6 +233,15 @@ class BaseLibSVM(six.with_metaclass(ABCMeta, BaseEstimator)):
 
         libsvm.set_verbosity_wrap(self.verbose)
 
+        if six.PY2:
+            # In python2 ensure kernel is ascii bytes to prevent a TypeError
+            if isinstance(kernel, six.types.UnicodeType):
+                kernel = str(kernel)
+        if six.PY3:
+            # In python3 ensure kernel is utf8 unicode to prevent a TypeError
+            if isinstance(kernel, bytes):
+                kernel = str(kernel, 'utf8')
+
         # we don't pass **self.get_params() to allow subclasses to
         # add other parameters to __init__
         self.support_, self.support_vectors_, self.n_support_, \
@@ -245,7 +254,8 @@ class BaseLibSVM(six.with_metaclass(ABCMeta, BaseEstimator)):
                 shrinking=self.shrinking, tol=self.tol,
                 cache_size=self.cache_size, coef0=self.coef0,
                 gamma=self._gamma, epsilon=self.epsilon,
-                max_iter=self.max_iter, random_seed=random_seed, n_threads=self.n_threads)
+                max_iter=self.max_iter, random_seed=random_seed,
+                n_threads=self.n_threads)
 
         self._warn_from_fit_status()
 
@@ -539,7 +549,7 @@ class BaseSVC(six.with_metaclass(ABCMeta, BaseLibSVM, ClassifierMixin)):
         dec = self._decision_function(X)
         if self.decision_function_shape is None and len(self.classes_) > 2:
             warnings.warn("The decision_function_shape default value will "
-                          "change from 'ovo' to 'ovr' in 0.18. This will change "
+                          "change from 'ovo' to 'ovr' in 0.19. This will change "
                           "the shape of the decision function returned by "
                           "SVC.", ChangedBehaviorWarning)
         if self.decision_function_shape == 'ovr' and len(self.classes_) > 2:
@@ -847,8 +857,8 @@ def _fit_liblinear(X, y, C, fit_intercept, intercept_scaling, class_weight,
         Weights assigned to each sample.
 
     n_threads : int, default: 1
-        Number of CPU cores used for liblinear L1 one-vs-rest for more than 2-class
-        classification. If given a value of -1, all cores are used.
+        Number of CPU cores used for liblinear L1 one-vs-rest for more than
+         2-class classification. If given a value of -1, all cores are used.
 
     Returns
     -------

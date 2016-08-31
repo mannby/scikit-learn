@@ -5,7 +5,7 @@ Online Latent Dirichlet Allocation with variational inference
 =============================================================
 
 This implementation is modified from Matthew D. Hoffman's onlineldavb code
-Link: http://www.cs.princeton.edu/~mdhoffma/code/onlineldavb.tar
+Link: http://matthewdhoffman.com/code/onlineldavb.tar
 """
 
 # Author: Chyi-Kwei Yau
@@ -224,7 +224,7 @@ class LatentDirichletAllocation(BaseEstimator, TransformerMixin):
     ----------
     components_ : array, [n_topics, n_features]
         Topic word distribution. ``components_[i, j]`` represents word j in
-        topic `i`. In the literature, this is called lambda.
+        topic `i`.
 
     n_batch_iter_ : int
         Number of iterations of the EM step.
@@ -241,7 +241,7 @@ class LatentDirichletAllocation(BaseEstimator, TransformerMixin):
         Chong Wang, John Paisley, 2013
 
     [3] Matthew D. Hoffman's onlineldavb code. Link:
-        http://www.cs.princeton.edu/~mdhoffma/code/onlineldavb.tar
+        http://matthewdhoffman.com//code/onlineldavb.tar
 
     """
 
@@ -350,7 +350,7 @@ class LatentDirichletAllocation(BaseEstimator, TransformerMixin):
         # TODO: make Parallel._effective_n_jobs public instead?
         n_jobs = _get_n_jobs(self.n_jobs)
         if parallel is None:
-            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose)
+            parallel = Parallel(n_jobs=n_jobs, verbose=max(0, self.verbose - 1))
         results = parallel(
             delayed(_update_doc_distribution)(X[idx_slice, :],
                                               self.exp_dirichlet_component_,
@@ -469,7 +469,7 @@ class LatentDirichletAllocation(BaseEstimator, TransformerMixin):
                 (n_features, self.components_.shape[1]))
 
         n_jobs = _get_n_jobs(self.n_jobs)
-        with Parallel(n_jobs=n_jobs, verbose=self.verbose) as parallel:
+        with Parallel(n_jobs=n_jobs, verbose=max(0, self.verbose - 1)) as parallel:
             for idx_slice in gen_batches(n_samples, batch_size):
                 self._em_step(X[idx_slice, :],
                               total_samples=self.total_samples,
@@ -506,7 +506,7 @@ class LatentDirichletAllocation(BaseEstimator, TransformerMixin):
         # change to perplexity later
         last_bound = None
         n_jobs = _get_n_jobs(self.n_jobs)
-        with Parallel(n_jobs=n_jobs, verbose=self.verbose) as parallel:
+        with Parallel(n_jobs=n_jobs, verbose=max(0, self.verbose - 1)) as parallel:
             for i in xrange(max_iter):
                 if learning_method == 'online':
                     for idx_slice in gen_batches(n_samples, batch_size):

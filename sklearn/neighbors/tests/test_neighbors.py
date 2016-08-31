@@ -17,6 +17,7 @@ from sklearn.utils.testing import assert_greater
 from sklearn.utils.validation import check_random_state
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn import neighbors, datasets
+from sklearn.exceptions import DataConversionWarning
 
 rng = np.random.RandomState(0)
 # load and shuffle iris dataset
@@ -348,14 +349,15 @@ def test_radius_neighbors_classifier_outlier_labeling():
     # Test radius-based classifier when no neighbors found and outliers
     # are labeled.
 
-    X = np.array([[1.0, 1.0], [2.0, 2.0]])
-    y = np.array([1, 2])
+    X = np.array([[1.0, 1.0], [2.0, 2.0], [0.99, 0.99],
+                  [0.98, 0.98], [2.01, 2.01]])
+    y = np.array([1, 2, 1, 1, 2])
     radius = 0.1
 
     z1 = np.array([[1.01, 1.01], [2.01, 2.01]])  # no outliers
-    z2 = np.array([[1.01, 1.01], [1.4, 1.4]])    # one outlier
+    z2 = np.array([[1.4, 1.4], [1.01, 1.01], [2.01, 2.01]])    # one outlier
     correct_labels1 = np.array([1, 2])
-    correct_labels2 = np.array([1, -1])
+    correct_labels2 = np.array([-1, 1, 2])
 
     weight_func = _weight_func
 
@@ -1200,3 +1202,18 @@ def test_dtype_convert():
 
     result = classifier.fit(X, y).predict(X)
     assert_array_equal(result, y)
+
+
+# ignore conversion to boolean in pairwise_distances
+@ignore_warnings(category=DataConversionWarning)
+def test_pairwise_boolean_distance():
+    # Non-regression test for #4523
+    # 'brute': uses scipy.spatial.distance through pairwise_distances
+    # 'ball_tree': uses sklearn.neighbors.dist_metrics
+    rng = np.random.RandomState(0)
+    X = rng.uniform(size=(6, 5))
+    NN = neighbors.NearestNeighbors
+
+    nn1 = NN(metric="jaccard", algorithm='brute').fit(X)
+    nn2 = NN(metric="jaccard", algorithm='ball_tree').fit(X)
+    assert_array_equal(nn1.kneighbors(X)[0], nn2.kneighbors(X)[0])

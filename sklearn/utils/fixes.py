@@ -193,6 +193,15 @@ except ImportError:
     def argpartition(a, kth, axis=-1, kind='introselect', order=None):
         return np.argsort(a, axis=axis, order=order)
 
+try:
+    from numpy import partition
+except ImportError:
+    warnings.warn('Using `sort` instead of partition.'
+                  'Upgrade numpy to 1.8 for better performace on large number'
+                  'of clusters')
+    def partition(a, kth, axis=-1, kind='introselect', order=None):
+        return np.sort(a, axis=axis, order=order)
+
 
 try:
     from itertools import combinations_with_replacement
@@ -398,3 +407,39 @@ if np_version < (1, 8, 1):
         return bool(np.asarray(a1 == a2).all())
 else:
     from numpy import array_equal
+
+if sp_version < (0, 13, 0):
+    def rankdata(a, method='average'):
+        if method not in ('average', 'min', 'max', 'dense', 'ordinal'):
+            raise ValueError('unknown method "{0}"'.format(method))
+
+        arr = np.ravel(np.asarray(a))
+        algo = 'mergesort' if method == 'ordinal' else 'quicksort'
+        sorter = np.argsort(arr, kind=algo)
+
+        inv = np.empty(sorter.size, dtype=np.intp)
+        inv[sorter] = np.arange(sorter.size, dtype=np.intp)
+
+        if method == 'ordinal':
+            return inv + 1
+
+        arr = arr[sorter]
+        obs = np.r_[True, arr[1:] != arr[:-1]]
+        dense = obs.cumsum()[inv]
+
+        if method == 'dense':
+            return dense
+
+        # cumulative counts of each unique value
+        count = np.r_[np.nonzero(obs)[0], len(obs)]
+
+        if method == 'max':
+            return count[dense]
+
+        if method == 'min':
+            return count[dense - 1] + 1
+
+        # average method
+        return .5 * (count[dense] + count[dense - 1] + 1)
+else:
+    from scipy.stats import rankdata

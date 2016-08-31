@@ -2,7 +2,7 @@
 
 # Authors: Tom Dupre la Tour <tom.dupre-la-tour@m4x.org>
 #
-# Licence: BSD 3 clause
+# License: BSD 3 clause
 
 import numpy as np
 import warnings
@@ -110,10 +110,10 @@ def sag_solver(X, y, sample_weight=None, loss='log', alpha=1.,
 
     max_iter: int, optional
         The max number of passes over the training data if the stopping
-        criterea is not reached. Defaults to 1000.
+        criteria is not reached. Defaults to 1000.
 
     tol: double, optional
-        The stopping criterea for the weights. The iterations will stop when
+        The stopping criteria for the weights. The iterations will stop when
         max(change in weights) / max(weights) < tol. Defaults to .001
 
     verbose: integer, optional
@@ -177,10 +177,11 @@ def sag_solver(X, y, sample_weight=None, loss='log', alpha=1.,
     >>> clf = linear_model.LogisticRegression(solver='sag')
     >>> clf.fit(X, y)
     ... #doctest: +NORMALIZE_WHITESPACE
-    LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-        intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-        n_threads=1, penalty='l2', random_state=None,
-        solver='sag', tol=0.0001, verbose=0, warm_start=False)
+    LogisticRegression(C=1.0, class_weight=None, dual=False,
+        fit_intercept=True, intercept_scaling=1, max_iter=100,
+        multi_class='ovr', n_jobs=1, n_threads=1, penalty='l2',
+        random_state=None, solver='sag', tol=0.0001, verbose=0,
+        warm_start=False)
 
     References
     ----------

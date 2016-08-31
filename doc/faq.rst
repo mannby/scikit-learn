@@ -102,7 +102,7 @@ fix bugs, maintain code and review contributions.
 Any algorithm that is added needs future attention by the developers,
 at which point the original author might long have lost interest.
 Also see `this thread on the mailing list
-<http://sourceforge.net/p/scikit-learn/mailman/scikit-learn-general/thread/CAAkaFLWcBG%2BgtsFQzpTLfZoCsHMDv9UG5WaqT0LwUApte0TVzg%40mail.gmail.com/#msg33104380>`_.
+<https://sourceforge.net/p/scikit-learn/mailman/scikit-learn-general/thread/CAAkaFLWcBG+gtsFQzpTLfZoCsHMDv9UG5WaqT0LwUApte0TVzg@mail.gmail.com/#msg33104380>`_.
 
 Why did you remove HMMs from scikit-learn?
 --------------------------------------------
@@ -231,8 +231,7 @@ consider the lack of fork-safety in Accelerate / vecLib as a bug.
 In Python 3.4+ it is now possible to configure ``multiprocessing`` to use the
 'forkserver' or 'spawn' start methods (instead of the default 'fork') to manage
 the process pools. This makes it possible to not be subject to this issue
-anymore. The version of joblib shipped with scikit-learn automatically uses
-that setting by default (under Python 3.4 and later).
+anymore.
 
 If you have custom code that uses ``multiprocessing`` directly instead of using
 it via joblib you can enable the 'forkserver' mode globally for your
@@ -251,12 +250,14 @@ You can find more default on the new start methods in the `multiprocessing
 documentation <https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods>`_.
 
 
-Why is there no support for deep learning / Will there be support for deep learning in scikit-learn?
-----------------------------------------------------------------------------------------------------
-Deep learning requires a rich vocabulary to define an architecture and the
-use of GPUs for efficient computing. However, neither of these fit within
-the design constraints of scikit-learn. As a result, deep learning is
-currently out of scope for what scikit-learn seeks to achieve.
+Why is there no support for deep or reinforcement learning / Will there be support for deep or reinforcement learning in scikit-learn?
+--------------------------------------------------------------------------------------------------------------------------------------
+Deep learning and reinforcement learning both require a rich vocabulary to
+define an architecture, with deep learning additionally requiring
+GPUs for efficient computing. However, neither of these fit within
+the design constraints of scikit-learn; as a result, deep learning
+and reinforcement learning are currently out of scope for what
+scikit-learn seeks to achieve.
 
 
 Why is my pull request not getting any attention?

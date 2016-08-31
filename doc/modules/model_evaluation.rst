@@ -48,8 +48,8 @@ Common cases: predefined values
 
 For the most common use cases, you can designate a scorer object with the
 ``scoring`` parameter; the table below shows all possible values.
-All scorer objects follow the convention that higher return values are better
-than lower return values.  Thus the returns from mean_absolute_error
+All scorer objects follow the convention that **higher return values are better
+than lower return values**.  Thus the returns from mean_absolute_error
 and mean_squared_error, which measure the distance between the model
 and the data, are negated.
 
@@ -292,7 +292,7 @@ Where available, you should select among these using the ``average`` parameter.
   true data sample.
 * ``"micro"`` gives each sample-class pair an equal contribution to the overall
   metric (except as a result of sample-weight). Rather than summing the
-  metric per class, this sums the dividends and divisors that make up the the
+  metric per class, this sums the dividends and divisors that make up the
   per-class metrics to calculate an overall quotient.
   Micro-averaging may be preferred in multilabel settings, including
   multiclass classification where a majority class is to be ignored.
@@ -350,7 +350,7 @@ In the multilabel case with binary label indicators: ::
 
 .. topic:: Example:
 
-  * See :ref:`example_feature_selection_plot_permutation_test_for_classification.py`
+  * See :ref:`sphx_glr_auto_examples_feature_selection_plot_permutation_test_for_classification.py`
     for an example of accuracy score usage using permutations of
     the dataset.
 
@@ -393,24 +393,24 @@ predicted to be in group :math:`j`. Here is an example::
          [1, 0, 2]])
 
 Here is a visual representation of such a confusion matrix (this figure comes
-from the :ref:`example_model_selection_plot_confusion_matrix.py` example):
+from the :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py` example):
 
-.. image:: ../auto_examples/model_selection/images/plot_confusion_matrix_001.png
+.. image:: ../auto_examples/model_selection/images/sphx_glr_plot_confusion_matrix_001.png
    :target: ../auto_examples/model_selection/plot_confusion_matrix.html
    :scale: 75
    :align: center
 
 .. topic:: Example:
 
-  * See :ref:`example_model_selection_plot_confusion_matrix.py`
+  * See :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`
     for an example of using a confusion matrix to evaluate classifier output
     quality.
 
-  * See :ref:`example_classification_plot_digits_classification.py`
+  * See :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
     for an example of using a confusion matrix to classify
     hand-written digits.
 
-  * See :ref:`example_text_document_classification_20newsgroups.py`
+  * See :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
     for an example of using a confusion matrix to classify text
     documents.
 
@@ -439,15 +439,15 @@ and inferred labels::
 
 .. topic:: Example:
 
-  * See :ref:`example_classification_plot_digits_classification.py`
+  * See :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
     for an example of classification report usage for
     hand-written digits.
 
-  * See :ref:`example_text_document_classification_20newsgroups.py`
+  * See :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
     for an example of classification report usage for text
     documents.
 
-  * See :ref:`example_model_selection_grid_search_digits.py`
+  * See :ref:`sphx_glr_auto_examples_model_selection_grid_search_digits.py`
     for an example of classification report usage for
     grid search with nested cross-validation.
 
@@ -555,7 +555,8 @@ by varying a decision threshold.
 
 The :func:`average_precision_score` function computes the average precision
 (AP) from prediction scores. This score corresponds to the area under the
-precision-recall curve.
+precision-recall curve. The value is between 0 and 1 and higher is better.
+With random predictions, the AP is the fraction of positive samples.
 
 Several functions allow you to analyze the precision, recall and F-measures
 score:
@@ -578,19 +579,19 @@ binary classification and multilabel indicator format.
 
 .. topic:: Examples:
 
-  * See :ref:`example_text_document_classification_20newsgroups.py`
+  * See :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
     for an example of :func:`f1_score` usage to classify  text
     documents.
 
-  * See :ref:`example_model_selection_grid_search_digits.py`
+  * See :ref:`sphx_glr_auto_examples_model_selection_grid_search_digits.py`
     for an example of :func:`precision_score` and :func:`recall_score` usage
     to estimate parameters using grid search with nested cross-validation.
 
-  * See :ref:`example_model_selection_plot_precision_recall.py`
+  * See :ref:`sphx_glr_auto_examples_model_selection_plot_precision_recall.py`
     for an example of :func:`precision_recall_curve` usage to evaluate
     classifier output quality.
 
-  * See :ref:`example_linear_model_plot_sparse_recovery.py`
+  * See :ref:`sphx_glr_auto_examples_linear_model_plot_sparse_recovery.py`
     for an example of :func:`precision_recall_curve` usage to select
     features for sparse linear models.
 
@@ -934,7 +935,7 @@ Here is a small example of how to use the :func:`roc_curve` function::
 
 This figure shows an example of such an ROC curve:
 
-.. image:: ../auto_examples/model_selection/images/plot_roc_001.png
+.. image:: ../auto_examples/model_selection/images/sphx_glr_plot_roc_001.png
    :target: ../auto_examples/model_selection/plot_roc.html
    :scale: 75
    :align: center
@@ -962,22 +963,22 @@ F1 score, ROC doesn't require optimizing a threshold for each label. The
 if the predicted outputs have been binarized.
 
 
-.. image:: ../auto_examples/model_selection/images/plot_roc_002.png
+.. image:: ../auto_examples/model_selection/images/sphx_glr_plot_roc_002.png
    :target: ../auto_examples/model_selection/plot_roc.html
    :scale: 75
    :align: center
 
 .. topic:: Examples:
 
-  * See :ref:`example_model_selection_plot_roc.py`
+  * See :ref:`sphx_glr_auto_examples_model_selection_plot_roc.py`
     for an example of using ROC to
     evaluate the quality of the output of a classifier.
 
-  * See :ref:`example_model_selection_plot_roc_crossval.py`
+  * See :ref:`sphx_glr_auto_examples_model_selection_plot_roc_crossval.py`
     for an example of using ROC to
     evaluate classifier output quality, using cross-validation.
 
-  * See :ref:`example_applications_plot_species_distribution_modeling.py`
+  * See :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
     for an example of using ROC to
     model species distribution.
 
@@ -1028,10 +1029,69 @@ set [0,1] has an error: ::
 
 .. topic:: Example:
 
-  * See :ref:`example_feature_selection_plot_rfe_with_cross_validation.py`
+  * See :ref:`sphx_glr_auto_examples_feature_selection_plot_rfe_with_cross_validation.py`
     for an example of zero one loss usage to perform recursive feature
     elimination with cross-validation.
 
+.. _brier_score_loss:
+
+Brier score loss
+----------------
+
+The :func:`brier_score_loss` function computes the
+`Brier score <https://en.wikipedia.org/wiki/Brier_score>`_
+for binary classes. Quoting Wikipedia:
+
+    "The Brier score is a proper score function that measures the accuracy of
+    probabilistic predictions. It is applicable to tasks in which predictions
+    must assign probabilities to a set of mutually exclusive discrete outcomes."
+
+This function returns a score of the mean square difference between the actual
+outcome and the predicted probability of the possible outcome. The actual
+outcome has to be 1 or 0 (true or false), while the predicted probability of
+the actual outcome can be a value between 0 and 1.
+
+The brier score loss is also between 0 to 1 and the lower the score (the mean
+square difference is smaller), the more accurate the prediction is. It can be
+thought of as a measure of the "calibration" of a set of probabilistic
+predictions.
+
+.. math::
+
+   BS = \frac{1}{N} \sum_{t=1}^{N}(f_t - o_t)^2
+
+where : :math:`N` is the total number of predictions, :math:`f_t` is the
+predicted probablity of the actual outcome :math:`o_t`.
+
+Here is a small example of usage of this function:::
+
+    >>> import numpy as np
+    >>> from sklearn.metrics import brier_score_loss
+    >>> y_true = np.array([0, 1, 1, 0])
+    >>> y_true_categorical = np.array(["spam", "ham", "ham", "spam"])
+    >>> y_prob = np.array([0.1, 0.9, 0.8, 0.4])
+    >>> y_pred = np.array([0, 1, 1, 0])
+    >>> brier_score_loss(y_true, y_prob)
+    0.055
+    >>> brier_score_loss(y_true, 1-y_prob, pos_label=0)
+    0.055
+    >>> brier_score_loss(y_true_categorical, y_prob, pos_label="ham")
+    0.055
+    >>> brier_score_loss(y_true, y_prob > 0.5)
+    0.0
+
+
+.. topic:: Example:
+
+  * See :ref:`example_calibration_plot_calibration.py`
+    for an example of Brier score loss usage to perform probability
+    calibration of classifiers.
+
+.. topic:: References:
+
+  * G. Brier, `Verification of forecasts expressed in terms of probability
+    <http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf>`_,
+    Monthly weather review 78.1 (1950)
 
 .. _multilabel_ranking_metrics:
 
@@ -1128,7 +1188,7 @@ Ranking loss
 
 The :func:`label_ranking_loss` function computes the ranking loss which
 averages over the samples the number of label pairs that are incorrectly
-ordered, i.e. true labels have a lower score than false labels, weighted by the
+ordered, i.e. true labels have a lower score than false labels, weighted by
 the inverse number of false and true labels. The lowest achievable
 ranking loss is zero.
 
@@ -1296,7 +1356,7 @@ function::
 
 .. topic:: Examples:
 
-  * See :ref:`example_ensemble_plot_gradient_boosting_regression.py`
+  * See :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
     for an example of mean squared error usage to
     evaluate gradient boosting regression.
 
@@ -1378,7 +1438,7 @@ Here is a small example of usage of the :func:`r2_score` function::
 
 .. topic:: Example:
 
-  * See :ref:`example_linear_model_plot_lasso_and_elasticnet.py`
+  * See :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
     for an example of R² score usage to
     evaluate Lasso and Elastic Net on sparse signals.
 

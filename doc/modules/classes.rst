@@ -174,6 +174,7 @@ Splitter Classes
    model_selection.LabelShuffleSplit
    model_selection.StratifiedShuffleSplit
    model_selection.PredefinedSplit
+   model_selection.TimeSeriesSplit
 
 Splitter Functions
 ------------------
@@ -240,6 +241,7 @@ Loaders
    datasets.fetch_20newsgroups
    datasets.fetch_20newsgroups_vectorized
    datasets.load_boston
+   datasets.load_breast_cancer
    datasets.load_diabetes
    datasets.load_digits
    datasets.load_files
@@ -727,6 +729,7 @@ Kernels:
    linear_model.lars_path
    linear_model.lasso_path
    linear_model.lasso_stability_path
+   linear_model.logistic_regression_path
    linear_model.orthogonal_mp
    linear_model.orthogonal_mp_gram
 
@@ -803,6 +806,7 @@ details.
    metrics.average_precision_score
    metrics.brier_score_loss
    metrics.classification_report
+   metrics.cohen_kappa_score
    metrics.confusion_matrix
    metrics.f1_score
    metrics.fbeta_score
@@ -867,7 +871,9 @@ details.
 
    metrics.adjusted_mutual_info_score
    metrics.adjusted_rand_score
+   metrics.calinski_harabaz_score
    metrics.completeness_score
+   metrics.fowlkes_mallows_score
    metrics.homogeneity_completeness_v_measure
    metrics.homogeneity_score
    metrics.mutual_info_score
@@ -928,7 +934,7 @@ See the :ref:`metrics` section of the user guide for further details.
    metrics.pairwise.paired_manhattan_distances
    metrics.pairwise.paired_cosine_distances
    metrics.pairwise.paired_distances
-   
+
 
 .. _mixture_ref:
 
@@ -947,9 +953,9 @@ See the :ref:`metrics` section of the user guide for further details.
    :toctree: generated/
    :template: class.rst
 
-   mixture.GMM
+   mixture.GaussianMixture
+   mixture.BayesianGaussianMixture
    mixture.DPGMM
-   mixture.VBGMM
 
 
 .. _multiclass_ref:
